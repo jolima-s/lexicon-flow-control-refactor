@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Ovn2_FlowControl.Entities;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Ovn2_FlowControl.Services
@@ -11,70 +13,45 @@ namespace Ovn2_FlowControl.Services
             Console.Write("Ange ålder: ");
             string? input = Console.ReadLine();
 
-            if (!int.TryParse(input, out int alder))    // Jämför med int.Parse(input) --> "hej" --> Exception
+            if (!int.TryParse(input, out int age))
             {
                 Console.WriteLine("Ogiltig ålder.");
                 return;
             }
 
-            if (alder < 20)
-            {
-                Console.WriteLine("Ungdomspris: 80kr");
-            }
-            else if (alder > 64)
-            {
-                Console.WriteLine("Pensionärspris: 90kr");
-            }
-            else
-            {
-                Console.WriteLine("Standardpris: 120kr");
-            }
+            Ticket ticket = new Ticket(age);
+            Console.WriteLine(ticket);
         }
 
         public static void GroupPriceCalculation()
         {
             Console.Write("Hur många personer är ni? ");
-            string? antalInput = Console.ReadLine();
+            string? countInput = Console.ReadLine();
 
-            if (!int.TryParse(antalInput, out int antal) || antal <= 0)
+            if (!int.TryParse(countInput, out int count) || count <= 0)
             {
                 Console.WriteLine("Ogiltigt antal personer.");
                 return;
             }
 
-            int total = 0;
+            List<Ticket> tickets = new List<Ticket>();
 
-            for (int i = 1; i <= antal; i++)
+            for (int i = 1; i <= count; i++)
             {
                 Console.Write($"Ange ålder för person {i}: ");
-                string? alderInput = Console.ReadLine();
+                string? ageInput = Console.ReadLine();
 
-                if (!int.TryParse(alderInput, out int alder) || alder < 0)
+                if (!int.TryParse(ageInput, out int age) || age < 0)
                 {
                     Console.WriteLine("Ogiltig ålder.");
                     return;
                 }
 
-                if (alder < 5 || alder > 100)
-                {
-                    Console.WriteLine($"Person {i}: Gratis");
-                }
-                else if (alder < 20)
-                {
-                    total += 80;
-                }
-                else if (alder > 64)
-                {
-                    total += 90;
-                }
-                else
-                {
-                    total += 120;
-                }
+                tickets.Add(new Ticket(age));
             }
 
-            Console.WriteLine($"Antal personer: {antal}");
-            Console.WriteLine($"Totalkostnad: {total} kr");
+            Console.WriteLine($"Antal personer: {tickets.Count}");
+            Console.WriteLine($"Totalkostnad: {tickets.Sum(t => t.Price):C}");
         }
     }
 }
