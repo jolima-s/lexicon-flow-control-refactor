@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ovn2_FlowControl
+namespace Ovn2_FlowControl.Services
 {
     internal class CinemaService
     {
