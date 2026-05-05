@@ -1,6 +1,7 @@
 ﻿
 using Ovn2_FlowControl;
 using System;
+using Ovn2_FlowControl.Services;
 
 namespace FlowControl
 {
@@ -32,11 +33,11 @@ namespace FlowControl
                         break;
 
                     case "3":
-                        UpprepaTioGanger();
+                        StringManipulationService.RepeatTenTimes();
                         break;
 
                     case "4":
-                        DetTredjeOrdet();
+                        StringManipulationService.ThirdWord();
                         break;
 
                     default:
@@ -117,41 +118,6 @@ namespace FlowControl
 
             Console.WriteLine($"Antal personer: {antal}");
             Console.WriteLine($"Totalkostnad: {total} kr");
-        }
-
-        static void UpprepaTioGanger()
-        {
-            Console.Write("Skriv en text: ");
-            string? text = Console.ReadLine();
-
-            for (int i = 1; i <= 10; i++)
-            {
-                Console.Write($"{i}. {text} ");
-            }
-
-            Console.WriteLine();
-        }
-
-        static void DetTredjeOrdet()
-        {
-            Console.Write("Skriv en mening med minst 3 ord: ");
-            string? mening = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(mening))
-            {
-                Console.WriteLine("Du måste skriva en mening.");
-                return;
-            }
-
-            string[] ord = mening.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-            if (ord.Length < 3)
-            {
-                Console.WriteLine("Mening måste innehålla minst 3 ord.");
-                return;
-            }
-
-            Console.WriteLine($"Det tredje ordet är: {ord[2]}");
         }
     }
 }
